@@ -1,4 +1,4 @@
-Sentiment Analysis Using BERT and Bayesian Optimization
+Sentiment Analysis Using BERT 
 
 Project Overview
 
