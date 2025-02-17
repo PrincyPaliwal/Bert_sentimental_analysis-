@@ -1,140 +1,107 @@
-Sentiment Analysis Using BERT 
+# Automated Data Ingestion Pipeline
 
-Project Overview
+## Overview
 
-This project focuses on performing sentiment analysis of text data using the BERT (Bidirectional Encoder Representations from Transformers) model. The goal is to classify sentiments as positive, negative, or neutral by leveraging the power of BERT for natural language understanding. Additionally, Bayesian Optimization is employed for hyperparameter fine-tuning to optimize model performance.
+The **Automated Data Ingestion Pipeline** streamlines the process of ingesting, transforming, and loading data from AWS services into Databricks Delta Lake. This solution enables schema evolution, real-time data streaming, and automated transformation using AWS-native tools.
 
-Features
+## Features
 
-Preprocessing and Cleaning: Effective data preprocessing techniques, including tokenization, removal of noise, and text normalization.
+- **End-to-End Data Pipeline**: Automates data ingestion from AWS to Databricks Delta Lake.
+- **AWS Glue Crawler**: Detects schema changes in S3 and updates metadata.
+- **Amazon Kinesis**: Streams real-time data for continuous processing.
+- **AWS EventBridge**: Triggers Databricks transformations based on Glue Crawler events.
+- **Databricks Integration**: Executes transformation notebooks and monitors execution.
+- **Delta Lake Schema Evolution**: Automatically adapts to changing data structures.
+- **AWS CloudFormation**: Automates infrastructure provisioning (Kinesis, Glue, S3).
+- **Scalability**: Designed to handle large-scale real-time and batch processing.
+- **Serverless Execution**: Uses AWS Lambda for event-driven triggers.
+- **Monitoring & Logging**: Tracks job execution and alerts on failures.
 
-Model Training: Fine-tuned BERT model for sentiment analysis on labeled datasets.
+## Folder Structure
 
-Feature Extraction: Leveraged BERT embeddings for capturing contextual relationships in text.
+### 1. **Ingestion Scripts**
 
-Bayesian Optimization: Applied for hyperparameter tuning to achieve better model accuracy and efficiency.
+Contains Python scripts for setting up and managing AWS services:
 
-High Accuracy: Demonstrated significant accuracy in sentiment classification.
+- **Glue Crawler Setup**: Automates metadata detection and schema evolution.
+- **Kinesis Stream Processing**: Captures and processes real-time data.
+- **EventBridge Rules**: Manages event-based triggers for automation.
 
-Project Workflow
+### 2. **Databricks Integration**
 
-Data Preparation:
+Includes:
 
-Preprocessing raw text data to clean and normalize it.
+- **Notebook Execution Scripts**: Triggers Databricks notebooks for data transformation.
+- **Delta Lake Management**: Ensures seamless schema evolution and data governance.
 
-Splitting data into training, validation, and test sets.
+### 3. **Infrastructure Automation**
 
-Model Development:
+Contains AWS CloudFormation templates for:
 
-Loading a pre-trained BERT model and fine-tuning it on the dataset.
+- **Kinesis Stream Setup**
+- **S3 Bucket Configuration**
+- **Glue Database & Crawler Setup**
 
-Implementing a classification head for sentiment prediction.
+## Getting Started
 
-Training and Evaluation:
+### Prerequisites
 
-Training the model with initial hyperparameters.
+To deploy and use this pipeline, ensure you have:
 
-Evaluating the model performance using accuracy, precision, recall, and F1-score.
+- **AWS Account** with permissions for Glue, Kinesis, S3, and EventBridge.
+- **Databricks Workspace** and API credentials.
+- **AWS CLI & Terraform (Optional)** for automated deployment.
 
-Hyperparameter Optimization:
+### Installation
 
-Utilizing Bayesian Optimization to fine-tune parameters such as learning rate, batch size, and number of epochs.
+Clone the repository to your local machine:
 
-GPU resources required for efficient optimization.
+```bash
+git clone https://github.com/your-repo/automated-data-ingestion.git
+cd automated-data-ingestion
+```
 
-Final Model Testing:
+### Setup & Deployment
 
-Testing the optimized model on unseen data.
+#### 1. **Deploy CloudFormation Stack**
 
-Requirements
+```bash
+aws cloudformation create-stack --stack-name AWSIngestionPipeline --template-body file://cloudformation-template.yaml --capabilities CAPABILITY_NAMED_IAM
+```
 
-Prerequisites
+#### 2. **Start Glue Crawler**
 
-Python 3.8+
+```bash
+python scripts/glue_crawler_setup.py
+```
 
-GPU with CUDA support (for training and optimization)
+#### 3. **Set Up EventBridge Rule**
 
-Libraries
+```bash
+python scripts/eventbridge_rule_setup.py
+```
 
-Transformers (Hugging Face)
+#### 4. **Trigger Databricks Notebook**
 
-PyTorch
+```bash
+python scripts/databricks_notebook_trigger.py
+```
 
-scikit-learn
+### Monitoring & Debugging
 
-Pandas
+- **CloudWatch Logs**: Tracks AWS Lambda and Glue job execution logs.
+- **Databricks Job Monitoring**: Monitors job runs and error handling.
+- **EventBridge Execution History**: Validates event triggers and execution success.
 
-NumPy
+## Contributions
 
-Matplotlib/Seaborn (for visualization)
+We welcome contributions! If you have ideas for improvements, submit a pull request.
 
-bayesian-optimization
+## License
 
-Install dependencies via:
+This project is licensed under the **MIT License**.
 
-pip install transformers torch scikit-learn pandas numpy matplotlib bayesian-optimization
+## Contact
 
-Project Files
-
-data/: Contains the dataset used for training and testing.
-
-scripts/preprocessing.py: Data preprocessing scripts.
-
-scripts/train.py: Model training and evaluation scripts.
-
-scripts/optimization.py: Implementation of Bayesian Optimization.
-
-notebooks/: Jupyter notebooks for experimentation and analysis.
-
-README.md: This file.
-
-How to Run
-
-Preprocess Data: Run the preprocessing script to clean and prepare the dataset.
-
-python scripts/preprocessing.py
-
-Train the Model: Train the BERT model using the training script.
-
-python scripts/train.py
-
-Optimize Hyperparameters: Use Bayesian Optimization for fine-tuning.
-
-python scripts/optimization.py
-
-Evaluate: Evaluate the optimized model on the test dataset and visualize results.
-
-python scripts/evaluate.py
-
-Results
-
-Accuracy: Achieved high classification accuracy after fine-tuning.
-
-Insights: Demonstrated the effectiveness of BERT in sentiment classification tasks.
-
-Optimization: Improved model performance with Bayesian Optimization.
-
-Future Work
-
-Deploy the model as an API for real-time sentiment analysis.
-
-Explore other optimization techniques for further performance gains.
-
-Integrate additional datasets to improve model robustness.
-
-Contributing
-
-Contributions are welcome! Feel free to submit a pull request or open an issue for any suggestions or improvements.
-
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Acknowledgments
-
-Hugging Face for providing the pre-trained BERT model.
-
-Scikit-learn for evaluation metrics.
-
-The open-source community for valuable libraries and tools.
+For issues, support, or questions, please use the GitHub Issues section or contact the project maintainer via email.
 
